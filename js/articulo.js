@@ -256,7 +256,7 @@ function registerForm(auth = false) {
                             <h1 class="display-5"><i class="fa-solid fa-user-pen"></i> Agregar Articulos</h1>
                         </div>
               
-                            <form action="" method="post" id="myFormReg">
+                            <form action="" method="post" id="myFormRegA">
                                 <label for="codigo" class="form-label">Código</label>
                                 <input type="text" class="form-control" name="codigo" id="codigo" > <br>
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -304,7 +304,7 @@ function registerForm(auth = false) {
 }
 
 async function registrarArticulo(auth = false) {
-    var myForm = document.getElementById("myFormReg");
+    var myForm = document.getElementById("myFormRegA");
     var formData = new FormData(myForm);
     var jsonData = {};
     var jsonCategoria = {};

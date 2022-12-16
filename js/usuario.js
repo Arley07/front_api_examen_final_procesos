@@ -43,7 +43,7 @@ function listarUsuarios(){
                     <h1 class="display-5"><i class="fa-solid fa-list"></i> Listado de usuarios</h1>
                 </div>
                   
-                <a href="#" onclick="registerForm('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"></i></a>
+                <a href="#" onclick="registerForm('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"> Usuario</i></a>
                 <table class="table">
                     <thead>
                         <tr>
