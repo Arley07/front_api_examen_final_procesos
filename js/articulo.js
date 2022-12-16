@@ -19,7 +19,7 @@ function listarArticulos(){
                     <h1 class="display-5"><i class="fa-solid fa-list"></i> Listado de Articulo</h1>
                 </div>
                   
-                <a href="#" onclick="registerForm('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"></i> Articulo</a>
+                <a href="#" onclick="registerFormA('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"></i> Articulo</a>
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,18 +36,20 @@ function listarArticulos(){
                         </tr>
                     </thead>
                     <tbody id="listar">`;
+                    var con=0;
             for(const articulo of data){
+                con++;
                 console.log(articulo.nombre)
                 articulos += `
                 
                         <tr>
-                            <th scope="row">${articulo.id}</th>
+                            <th scope="row">${con}</th>
                             <td>${articulo.codigo}</td>
                             <td>${articulo.nombre}</td>
                             <td>${articulo.descripcion}</td>
-                            <td>${articulo.fechaarticulo}</td>
+                            <td>${articulo.fechaarticulo.substr(0,10)}</td>
                             <td>${articulo.categoria.nombreca}</td>
-                            <td>${articulo.usuario}</td>
+                            <td>${articulo.usuario.nombre}</td>
                             <td>${articulo.stock}</td>
                             <td>${articulo.preciov}</td>
                             <td>${articulo.precioc}</td>
@@ -102,15 +104,14 @@ function verModificarArticulo(codigo){
             'Content-Type': 'application/json',
             'Authorization': localStorage.token
         },
-    }
-    fetch(urlApi+"/articulo/codigo/"+ codigo,settings)
+    };
+    fetch(urlApi+"/categorias",settings)
     .then((response) => response.json())
-    .then(function(articulo){
-            var cadena='';
-            if(articulo){  
-                     fetch(urlApi + "/categorias", settings)
-                    .then((response) => response.json())
-                    .then(function(da) {
+    .then(function(da){
+            if(da){  
+                     fetch(urlApi + "/articulo/codigo/"+ codigo, settings)
+                    .then((resp) => resp.json())
+                    .then(function(articulo) {
                         var cadena = "";
                         var fechaDB = articulo.fecha;  
                 console.log(articulo);                
@@ -127,20 +128,21 @@ function verModificarArticulo(codigo){
                     <label for="descripcion"  class="form-label">LDescripción</label>
                     <input type="text" class="form-control" name="descripcion" id="descripcion" required value="${articulo.descripcion}"> <br>
                     <label for="fechaarticulo"  class="form-label">Fecha Articulo</label>
-                    <input type="text" class="form-control" name="fechaarticulo" id="fechaarticulo" required value="${articulo.fechaarticulo}"> <br>
+                    <input type="text" class="form-control" name="fechaarticulo" id="fechaarticulo" required value="${articulo.fechaarticulo.substr(0,10)}"> <br>
                     <label for="categoria" class="form-label">Categoria</label>
                     <select class="form-select" name="categoria" id="categoria">
+                    ${console.log(da)}
                       <option value="${articulo.categoria.id}">${articulo.categoria.nombreca}</option>`;
                       
-                      /*
+                      
                         for (const category of da) {
                                 cadena += `
                         <option value="${category.id}">${category.nombreca}</option>`;
-                        } */
+                        } 
                         cadena += `
                     </select>
                     <label for="cusuario" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" name="usuario" id="usuario" required value="${articulo.usuario}"> 
+                    <input type="text" class="form-control" name="usuario" id="usuario" required value="${articulo.usuario.nombre}"> 
                     <label for="stock" class="form-label">Stock</label>
                     <input type="text" class="form-control" id="stock" name="stock" required value="${articulo.stock}"> 
                     <label for="preciov" class="form-label">Precio de Venta</label>
@@ -177,12 +179,12 @@ async function modificarArticulo(codigo) {
           jsonData[k] = v;
         }
     }
-    const request = await fetch(urlApi + "/articulo/codigo" + codigo, {
+    const request = await fetch(urlApi + "/articulo/codigo/" + codigo, {
         method: "PUT",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.token
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: localStorage.token,
         },
         body: JSON.stringify(jsonData),
     });
@@ -235,7 +237,7 @@ function verArticulo(codigo) {
         });
 }
 
-function registerForm(auth = false) {
+function registerFormA(auth = false) {
     var settings = {
         method: 'GET',
         headers: {

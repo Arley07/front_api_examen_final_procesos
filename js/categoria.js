@@ -19,7 +19,7 @@ function listarCategorias(){
                     <h1 class="display-5"><i class="fa-solid fa-list"></i> Listado de categorias</h1>
                 </div>
                   
-                <a href="#" onclick="registerForm('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"> Categoria</i></a>
+                <a href="#" onclick="registerFormC('true')" class="btn btn-outline-success"><i class="fa-solid fa-user-plus"> Categoria</i></a>
                 <table class="table">
                     <thead>
                         <tr>
@@ -140,7 +140,7 @@ async function modificarCategoria(id){
     modal.hide();
 }
 
-function registerForm(auth=false){
+function registerFormC(auth=false){
     cadena = `
             <div class="p-3 mb-2 bg-light text-dark">
                 <h1 class="display-5"><i class="fa-solid fa-user-pen"></i> Registrar Categoria</h1>
